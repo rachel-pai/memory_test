@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+
+    // Preserve the previous study's authenticated autosave access.
+    match /prolific_annotations/{document} {
+      allow create, read, update: if signedIn();
+    }
+
+    // Contains only SHA-256 participant keys and the ten slot claims.
+    match /countermem_v3_admin/countermem-gov-v3 {
+      allow read: if signedIn();
+      allow create, update: if signedIn()
+        && request.resource.data.capacity == 10
+        && request.resource.data.assignments.size() <= 10
+        && request.resource.data.claimed_slots.size() <= 10;
+    }
+
+    // A participant can read/write only the document created by their
+    // persistent anonymous Firebase identity.
+    match /countermem_v3_annotations/{participantHash} {
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid;
+      allow read: if signedIn() && resource.data.uid == request.auth.uid;
+      allow update: if signedIn() && resource.data.uid == request.auth.uid
+        && request.resource.data.uid == request.auth.uid;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+    }
+  }
+}
