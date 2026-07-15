@@ -68,12 +68,22 @@ service cloud.firestore {
       allow get: if signedIn() && (
         !exists(/databases/$(database)/documents/countermem_simplified_v3_15_annotations/$(participantHash))
         || resource.data.uid == request.auth.uid
+        || participantHash == 'e0d47145cbb803a7d8a0d9afb96173faaf4dcec467b9e6d42e5bdfe2a0c54661'
       );
       // Public-link coordinator download mode, explicitly accepted by the
       // study owner. Anyone who can anonymously authenticate can list/read.
       allow list: if signedIn();
-      allow update: if signedIn() && resource.data.uid == request.auth.uid
-        && request.resource.data.uid == request.auth.uid;
+      allow update: if signedIn() && (
+        (resource.data.uid == request.auth.uid
+          && request.resource.data.uid == request.auth.uid)
+        || (participantHash == 'e0d47145cbb803a7d8a0d9afb96173faaf4dcec467b9e6d42e5bdfe2a0c54661'
+          && resource.data.participant_id == '69808ab3d1cff6f73e3ab495'
+          && request.resource.data.participant_id == resource.data.participant_id
+          && resource.data.slot == '06'
+          && request.resource.data.slot == resource.data.slot
+          && request.resource.data.study_id == resource.data.study_id
+          && request.resource.data.uid == request.auth.uid)
+      );
       allow delete: if signedIn() && resource.data.uid == request.auth.uid;
     }
   }
