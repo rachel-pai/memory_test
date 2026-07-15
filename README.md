@@ -18,10 +18,8 @@ files in this repository.
 
 ## Coordinator downloads
 
-`admin.html` provides read-only JSON downloads by participant ID. On first use,
-copy the UID displayed by the page and manually create
-`countermem_v3_admin_users/{uid}` in Firestore. The security rules allow that
-authorized browser to list/download annotations but never modify or delete them.
+`admin.html` automatically loads all participant documents and provides
+read-only JSON downloads by participant ID or as a single combined export.
 
 To reopen the study from scratch, archive/export the two collections and delete
 the allocator document and annotation documents in Firebase Console. Never

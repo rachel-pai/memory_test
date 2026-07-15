@@ -2,19 +2,6 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
-    function isCounterMemAdmin() {
-      return signedIn()
-        && exists(/databases/$(database)/documents/countermem_v3_admin_users/$(request.auth.uid));
-    }
-
-    // Read-only authorization markers created manually by the coordinator.
-    // A signed-in browser can check only its own marker; clients cannot create,
-    // modify, list, or delete administrator records.
-    match /countermem_v3_admin_users/{adminUid} {
-      allow get: if signedIn() && request.auth.uid == adminUid;
-      allow list, create, update, delete: if false;
-    }
-
     // Preserve the previous study's authenticated autosave access.
     match /prolific_annotations/{document} {
       allow create, read, update: if signedIn();
@@ -36,11 +23,9 @@ service cloud.firestore {
       // A first-time participant must be able to confirm that their hashed
       // document does not exist before creating it. Queries/listing remain
       // forbidden, and an existing document is readable only by its owner.
-      allow get: if isCounterMemAdmin() || (signedIn() && (
-        !exists(/databases/$(database)/documents/countermem_v3_annotations/$(participantHash))
-        || resource.data.uid == request.auth.uid
-      ));
-      allow list: if isCounterMemAdmin();
+      // The public download page lists all annotation documents after anonymous
+      // sign-in. Writes remain restricted to each participant's original UID.
+      allow get, list: if signedIn();
       allow update: if signedIn() && resource.data.uid == request.auth.uid
         && request.resource.data.uid == request.auth.uid;
       allow delete: if signedIn() && resource.data.uid == request.auth.uid;
