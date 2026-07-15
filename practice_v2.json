@@ -1,0 +1,112 @@
+[
+  {
+    "task_id": "V3-0001",
+    "domain": "workplace",
+    "template_family": 1,
+    "query": "What is the current launch blocker for Project River?",
+    "memory_texts": [
+      "[May 2 | lead] Project River: launch blocker is vendor approval.",
+      "[April 8 | coordinator] Project River: launch blocker is security review.",
+      "[May 3 | archive] A similarly named record does not state the launch blocker for Project River."
+    ],
+    "retrieval_scores": [
+      0.89,
+      0.91,
+      0.42
+    ],
+    "requester_role": "case_requester",
+    "project": "Project River",
+    "governance_context": "The governing register records the first listed state K-JITIMH remains usable and the other state K-QOZOBX must be withheld. For this request, the record is in state K-JITIMH.",
+    "practice_id": "practice_expose",
+    "correct_action": "expose",
+    "correct_revision": "candidate_1"
+  },
+  {
+    "task_id": "V3-0012",
+    "domain": "workplace",
+    "template_family": 3,
+    "query": "What is the current launch blocker for Project River?",
+    "memory_texts": [
+      "[May 2 | lead] Project River: launch blocker is vendor approval.",
+      "[April 8 | coordinator] Project River: launch blocker is security review.",
+      "[May 3 | archive] A similarly named record does not state the launch blocker for Project River."
+    ],
+    "retrieval_scores": [
+      0.89,
+      0.91,
+      0.42
+    ],
+    "requester_role": "case_requester",
+    "project": "Project River",
+    "governance_context": "Decision record \u2014 rules: the first listed scope K-XVQLQL permits the full record and the other scope K-UNOZDW permits only the requested value Evidence for this request: the request is under scope K-UNOZDW.",
+    "practice_id": "practice_redact",
+    "correct_action": "redact",
+    "correct_revision": "candidate_1"
+  },
+  {
+    "task_id": "V3-0004",
+    "domain": "workplace",
+    "template_family": 1,
+    "query": "What is the current launch blocker for Project River?",
+    "memory_texts": [
+      "[May 2 | lead] Project River: launch blocker is vendor approval.",
+      "[April 8 | coordinator] Project River: launch blocker is security review.",
+      "[May 3 | archive] A similarly named record does not state the launch blocker for Project River."
+    ],
+    "retrieval_scores": [
+      0.89,
+      0.91,
+      0.42
+    ],
+    "requester_role": "case_requester",
+    "project": "Project River",
+    "governance_context": "The governing register records the first listed state K-JITIMH remains usable and the other state K-QOZOBX must be withheld. For this request, the record is in state K-QOZOBX.",
+    "practice_id": "practice_suppress",
+    "correct_action": "suppress",
+    "correct_revision": "none"
+  },
+  {
+    "task_id": "V3-0013",
+    "domain": "education",
+    "template_family": 4,
+    "query": "What is the current review date for Project Atlas?",
+    "memory_texts": [
+      "[May 2 | lead] Project Atlas: review date is May 12.",
+      "[April 8 | coordinator] Project Atlas: review date is April 28.",
+      "[May 3 | archive] A similarly named record does not state the review date for Project Atlas."
+    ],
+    "retrieval_scores": [
+      0.89,
+      0.91,
+      0.42
+    ],
+    "requester_role": "case_requester",
+    "project": "Project Atlas",
+    "governance_context": "Applicable handbook entry: gate G-GYOBTF permits expose; gate G-JGMUEU permits redact; gate G-OBJABA permits suppress; gate G-ABWDNE permits refuse; gate G-WXUYDV permits abstain; audit tags do not alter the gate Observed case state: decision gate G-ABWDNE applies and audit tag is A-AVBXPX.",
+    "practice_id": "practice_refuse",
+    "correct_action": "refuse",
+    "correct_revision": "none"
+  },
+  {
+    "task_id": "V3-0007",
+    "domain": "workplace",
+    "template_family": 2,
+    "query": "What is the current launch blocker for Project River?",
+    "memory_texts": [
+      "[April 8 | coordinator] Project River: launch blocker is security review.",
+      "[May 2 | lead] Project River: launch blocker is vendor approval.",
+      "[May 3 | archive] A similarly named record does not state the launch blocker for Project River."
+    ],
+    "retrieval_scores": [
+      0.91,
+      0.89,
+      0.42
+    ],
+    "requester_role": "case_requester",
+    "project": "Project River",
+    "governance_context": "Use these local rules: the first listed seal K-FLRGSY is sufficient and the other seal K-VKBMHO is unresolved Current case facts: the latest record carries seal K-VKBMHO.",
+    "practice_id": "practice_abstain",
+    "correct_action": "abstain",
+    "correct_revision": "none"
+  }
+]

@@ -16,6 +16,14 @@ service cloud.firestore {
         && request.resource.data.claimed_slots.size() <= 10;
     }
 
+    match /countermem_v3_admin/countermem-simplified-balanced-v2 {
+      allow read: if signedIn();
+      allow create, update: if signedIn()
+        && request.resource.data.capacity == 10
+        && request.resource.data.assignments.size() <= 10
+        && request.resource.data.claimed_slots.size() <= 10;
+    }
+
     // A participant can read/write only the document created by their
     // persistent anonymous Firebase identity.
     match /countermem_v3_annotations/{participantHash} {
@@ -26,6 +34,16 @@ service cloud.firestore {
       // The public download page lists all annotation documents after anonymous
       // sign-in. Writes remain restricted to each participant's original UID.
       allow get, list: if signedIn();
+      allow update: if signedIn() && resource.data.uid == request.auth.uid
+        && request.resource.data.uid == request.auth.uid;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+    }
+
+
+    match /countermem_simplified_v2_annotations/{participantHash} {
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid;
+      allow get: if signedIn() && resource.data.uid == request.auth.uid;
+      allow list: if false;
       allow update: if signedIn() && resource.data.uid == request.auth.uid
         && request.resource.data.uid == request.auth.uid;
       allow delete: if signedIn() && resource.data.uid == request.auth.uid;
