@@ -48,5 +48,22 @@ service cloud.firestore {
         && request.resource.data.uid == request.auth.uid;
       allow delete: if signedIn() && resource.data.uid == request.auth.uid;
     }
+
+    match /countermem_v3_admin/countermem-simplified-balanced-v3-15 {
+      allow read: if signedIn();
+      allow create, update: if signedIn()
+        && request.resource.data.capacity == 20
+        && request.resource.data.assignments.size() <= 20
+        && request.resource.data.claimed_slots.size() <= 20;
+    }
+
+    match /countermem_simplified_v3_15_annotations/{participantHash} {
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid;
+      allow get: if signedIn() && resource.data.uid == request.auth.uid;
+      allow list: if false;
+      allow update: if signedIn() && resource.data.uid == request.auth.uid
+        && request.resource.data.uid == request.auth.uid;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+    }
   }
 }
