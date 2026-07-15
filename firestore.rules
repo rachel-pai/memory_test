@@ -42,7 +42,10 @@ service cloud.firestore {
 
     match /countermem_simplified_v2_annotations/{participantHash} {
       allow create: if signedIn() && request.resource.data.uid == request.auth.uid;
-      allow get: if signedIn() && resource.data.uid == request.auth.uid;
+      allow get: if signedIn() && (
+        !exists(/databases/$(database)/documents/countermem_simplified_v2_annotations/$(participantHash))
+        || resource.data.uid == request.auth.uid
+      );
       allow list: if false;
       allow update: if signedIn() && resource.data.uid == request.auth.uid
         && request.resource.data.uid == request.auth.uid;
@@ -59,7 +62,13 @@ service cloud.firestore {
 
     match /countermem_simplified_v3_15_annotations/{participantHash} {
       allow create: if signedIn() && request.resource.data.uid == request.auth.uid;
-      allow get: if signedIn() && resource.data.uid == request.auth.uid;
+      // The page first checks whether its hashed response document exists.
+      // Permit that missing-document check, while keeping existing documents
+      // readable only by the anonymous UID that created them.
+      allow get: if signedIn() && (
+        !exists(/databases/$(database)/documents/countermem_simplified_v3_15_annotations/$(participantHash))
+        || resource.data.uid == request.auth.uid
+      );
       allow list: if false;
       allow update: if signedIn() && resource.data.uid == request.auth.uid
         && request.resource.data.uid == request.auth.uid;
